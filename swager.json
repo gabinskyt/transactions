@@ -1,0 +1,39 @@
+swagger: "2.0"
+
+info:
+  description: "Simplest REST API for simulation of transactions."
+  version: "1.0.0"
+  title: "Digital Hub"
+  contact:
+    email: "moisestello12@gmail.com"
+host: "localhost:5000"
+basePath: "/"
+
+tags:
+- name: "transaction"
+  description: "Money movements"
+- name: "account"
+  description: "Account operations"
+schemes:
+- "http"
+- "https"
+
+paths:
+  /transaction:
+    post:
+      tags:
+      - "transaction"
+      summary: "transfer money"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: body
+        schema: 
+          type: object
+        
+      responses:
+        '200':
+          description: OK
