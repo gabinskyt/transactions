@@ -127,9 +127,9 @@ class Account(Resource):
 		return response
 		
 # URL's
-api.add_resource(TransactionCreate, '/transaction')
-api.add_resource(TransactionRead, '/transaction/<account>/<transactions>')
-api.add_resource(Account, '/account/<account>')
+api.add_resource(TransactionCreate, '/api/transaction')
+api.add_resource(TransactionRead, '/api/transaction/<account>/<transactions>')
+api.add_resource(Account, '/api/account/<account>')
 
 if __name__ == '__main__':
  app.run(debug=True)
