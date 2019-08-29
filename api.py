@@ -60,7 +60,8 @@ class TransactionCreate(Resource):
 
 class TransactionRead(Resource):
 	#Get transaction
-	def get(self, account):
+	def get(self, account, transactions):
+		notFound = True
 		response = {
 			"transactions": []
 		}
@@ -71,7 +72,16 @@ class TransactionRead(Resource):
 
 		for row in lines:
 			#Select row
-			if(row[0] == account or row[1] == account):
+			if(row[0] == account and (transactions == "sent" or transactions == "all") ):
+				item = {
+					"fromAccount": row[0],
+					"toAccount": row[1],
+					"amount": row[2],
+					"sentAt": row[3]
+				}
+				response['transactions'].append(item)
+
+			if(row[1] == account and (transactions == "received" or transactions == "all") ):
 				item = {
 					"fromAccount": row[0],
 					"toAccount": row[1],
@@ -82,11 +92,44 @@ class TransactionRead(Resource):
 
 		readFile.close()
 
+		if(len(response['transactions']) == 0):
+			return "No transactions foud", 404
+
+		return response
+
+class Account(Resource):
+	#Get transaction
+	def get(self, account):
+		response = {
+			"balance": []
+		}
+
+		with open('accounts.csv', 'r') as readFile:
+			reader = csv.reader(readFile)
+			lines = list(reader)
+
+		for row in lines:
+			#Select row
+			if(row[0] == account):
+				item = {
+					"account": row[0],
+					"balance": row[1],
+					"owner": row[2],
+					"createdAt": row[3]
+				}
+				response['balance'].append(item)
+
+		readFile.close()
+
+		if(len(response['balance']) == 0):
+			return "Account not foud", 404
+
 		return response
 		
 # URL's
 api.add_resource(TransactionCreate, '/transaction')
-api.add_resource(TransactionRead, '/transaction/<account>')
+api.add_resource(TransactionRead, '/transaction/<account>/<transactions>')
+api.add_resource(Account, '/account/<account>')
 
 if __name__ == '__main__':
  app.run(debug=True)
