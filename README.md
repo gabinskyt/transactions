@@ -2,7 +2,8 @@
 
 ###### NOTE: Python 3.7 is required (Virtual enviroment recomended)
 
-Install the dependences
+Install the dependences 
+(This project was built whith Flask because of the simplicity of this little API. It was built in just one script)
 
 ```
 pip install -U Flask
