@@ -14,3 +14,5 @@ Open a terminal in the root directory and run api.py
 python api.py
 ```
 !Try with POSTman or another REST tester¡
+
+###### NOTE: Highly recommended to try with Postman
